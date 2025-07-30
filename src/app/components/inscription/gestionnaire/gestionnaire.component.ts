@@ -10,8 +10,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './gestionnaire.component.css'
 })
 export class GestionnaireComponent {
-fichierSelectionner($event: Event) {
-}
+  fichier: File | null = null;
   conditionUtilisation: FormGroup;
   constructor(private fb:FormBuilder, private route:Router) {
     this.conditionUtilisation = this.fb.group({
@@ -19,8 +18,16 @@ fichierSelectionner($event: Event) {
     });
   }
 
+  fichierSelectionner(event: any) {
+    this.fichier = event.target.files[0];
+    console.log("Fichier sélectionné :", this.fichier);
+  }
+
   valider(){
     if (this.conditionUtilisation.valid) {
+      if (this.fichier) {
+        console.log("Fichier prêt à être envoyé :", this.fichier);
+      }
       console.log("Conditions acceptées");
       // this.route.navigate(['inscription/choix']);
     } else {
